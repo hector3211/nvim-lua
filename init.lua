@@ -89,6 +89,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 require'lspconfig'.clangd.setup {
   capabilities = capabilities,
 }
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
 
 -- Mason
 require("mason").setup()
@@ -113,6 +114,7 @@ prettier.setup({
     "yaml",
   },
 })
+
 
 -- Treesitter
 require("nvim-treesitter.configs").setup{highlight={enable=true}}
