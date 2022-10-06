@@ -44,6 +44,7 @@ require('lualine').setup()
 --BufferLine
 require("bufferline").setup{}
 
+
 -- AutoPairs
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
