@@ -30,6 +30,9 @@ require('plugins')
 require('maps')
 
 require'lspconfig'.tsserver.setup {}
+require'lspconfig'.tailwindcss.setup{}
+require'lspconfig'.astro.setup{}
+require'lspconfig'.gopls.setup{}
 
 -- Theme
 vim.cmd[[colorscheme tokyonight]]
@@ -117,4 +120,5 @@ prettier.setup({
 
 
 -- Treesitter
-require("nvim-treesitter.configs").setup{highlight={enable=true}}
+require("nvim-treesitter.configs").setup{highlight={enable=true},autotag={enable=true}}
+
