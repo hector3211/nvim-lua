@@ -31,12 +31,15 @@ require('maps')
 
 require'lspconfig'.tsserver.setup {}
 require'lspconfig'.tailwindcss.setup{}
+require'lspconfig'.cssls.setup{}
 require'lspconfig'.astro.setup{}
 require'lspconfig'.gopls.setup{}
 
 -- Theme
 vim.cmd[[colorscheme tokyonight]]
 
+-- Comments
+require('nvim_comment').setup()
 
 -- Nvim Tree 
 require("nvim-tree").setup()
