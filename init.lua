@@ -3,9 +3,7 @@ vim.cmd("autocmd!")
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
-
 vim.opt.number = true
-
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.smarttab = true
@@ -29,11 +27,41 @@ require('highlights')
 require('plugins')
 require('maps')
 
+-- Typescript/ Javascript
 require'lspconfig'.tsserver.setup {}
+-- Tailwind
 require'lspconfig'.tailwindcss.setup{}
+-- CSS
 require'lspconfig'.cssls.setup{}
+--Astro
 require'lspconfig'.astro.setup{}
+-- Golang
 require'lspconfig'.gopls.setup{}
+-- RUST
+require'lspconfig'.rust_analyzer.setup{}
+-- Rust Tools
+local rt = require("rust-tools")
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
+
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+-- The following example advertise capabilities to `clangd`.
+require'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+}
+-- Format on save
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
 
 -- Theme
 vim.cmd[[colorscheme tokyonight]]
@@ -50,59 +78,13 @@ require('lualine').setup()
 --BufferLine
 require("bufferline").setup{}
 
-
 -- AutoPairs
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
 })
 
---CMP
-
-local cmp = require'cmp'
-cmp.setup ({
-    mapping = cmp.mapping.preset.insert({
-          ['<Tab>'] = function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
-            end
-          end,
-          ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end,
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<Esc>'] = cmp.mapping.close(),
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'buffer' },
-  }
-})
-
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- The following example advertise capabilities to `clangd`.
-require'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-}
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
-
--- Mason
-require("mason").setup()
-
 -- Prettier
 local prettier = require("prettier")
-
 prettier.setup({
   bin = 'prettier', -- or `'prettierd'` (v0.22+)
   filetypes = {
@@ -118,10 +100,15 @@ prettier.setup({
     "typescript",
     "typescriptreact",
     "yaml",
+    "go",
+    "rust"
   },
 })
 
-
--- Treesitter
-require("nvim-treesitter.configs").setup{highlight={enable=true},autotag={enable=true}}
-
+vim.filetype.add({
+    extension = {
+        astro = "astro"
+    }
+})
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0

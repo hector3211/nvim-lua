@@ -6,3 +6,4 @@ keymap.set('n',"[w",":BufferLineCycleNext<CR>")
 keymap.set('n',"[q",":BufferLineCyclePrev<CR>")
 --Quit buffer
 keymap.set('n',"<C-q>",":bdelete<CR>")
+
