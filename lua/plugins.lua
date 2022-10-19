@@ -47,6 +47,7 @@ packer.startup(function(use)
   use "terrortylor/nvim-comment" -- Comments
   use 'simrat39/rust-tools.nvim' -- Rust tools
     use 'lewis6991/gitsigns.nvim' -- GitSigns
+    use 'nvim-lua/plenary.nvim' -- Plenary
 
 
 end)
