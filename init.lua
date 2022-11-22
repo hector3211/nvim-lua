@@ -4,6 +4,8 @@ vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 vim.opt.number = true
+vim.opt.relativenumber = true
+-- netr_w stuff
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 -- TABS
@@ -30,7 +32,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.updatetime = 50
 
 -- MAP LEADER Key to space
-vim.g.mapleader = ' '
+vim.keymap.set("n", "<space>", "<Nop>", { silent = true, remap = false })
+vim.g.mapleader = " "
 
 require('highlights')
 require('plugins')
@@ -38,13 +41,25 @@ require('maps')
 
 
 -- Theme
+require("tokyonight").setup({
+    style = "storm",
+    -- transparent = true,
+    terminal_colors = true
+})
 vim.cmd [[colorscheme tokyonight]]
+
+-- Run gofmt + goimport on save
+-- require('go').setup()
+
+require("null-ls").setup({
+    debug = true,
+})
+
+--Nvim tree
+require("nvim-tree").setup()
 
 -- Comments
 require('nvim_comment').setup()
-
--- Nvim Tree
-require("nvim-tree").setup()
 
 -- LuaLine
 require('lualine').setup {}
@@ -63,12 +78,10 @@ prettier.setup({
     bin = 'prettier', -- or `'prettierd'` (v0.22+)
     filetypes = {
         "css",
-        "graphql",
         "html",
         "javascript",
         "javascriptreact",
         "json",
-        "less",
         "markdown",
         "scss",
         "typescript",
@@ -76,12 +89,3 @@ prettier.setup({
         "yaml",
     },
 })
-
--- Astro Treesitter work around
-vim.filetype.add({
-    extension = {
-        astro = "astro"
-    }
-})
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0

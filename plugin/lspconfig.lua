@@ -32,7 +32,8 @@ local on_attach = function(client, bufnr)
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', '<C-h>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 end
@@ -68,21 +69,15 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-nvim_lsp.flow.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-}
 
 nvim_lsp.tsserver.setup {
-    on_attach = on_attach,
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        enable_format_on_save(client, bufnr)
+    end,
+    -- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     cmd = { "typescript-language-server", "--stdio" },
     capabilities = capabilities
-}
-
-nvim_lsp.sourcekit.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
 }
 
 nvim_lsp.sumneko_lua.setup {
@@ -123,11 +118,18 @@ nvim_lsp.astro.setup {
 }
 
 nvim_lsp.gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        enable_format_on_save(client, bufnr)
+    end,
+    capabilities = capabilities,
 }
+
 nvim_lsp.rust_analyzer.setup {
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        enable_format_on_save(client, bufnr)
+    end,
     capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
