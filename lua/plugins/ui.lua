@@ -1,3 +1,4 @@
+local icons = require("lazyvim.config").icons
 return {
   -- messages, cmdline and the popupmenu
   {
@@ -76,8 +77,8 @@ return {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
-      { "[w", "<Cmd>BufferLineCycleNext<CR>" },
-      { "[q", "<Cmd>BufferLineCyclePrev<CR>" },
+      { "<Tab>", "<Cmd>BufferLineCycleNext<CR>" },
+      { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>" },
     },
     opts = {
       options = {
@@ -98,6 +99,37 @@ return {
         theme = "tokyonight",
       },
     },
+    -- sections = {
+    --   lualine_a = { "mode" },
+    --   lualine_b = {
+    --     "branch",
+    --     {
+    --       "diff",
+    --       symbols = {
+    --         added = icons.git.added,
+    --         modified = icons.git.modified,
+    --         removed = icons.git.removed,
+    --       },
+    --       source = function()
+    --         local gitsigns = vim.b.gitsigns_status_dict
+    --         if gitsigns then
+    --           return {
+    --             added = gitsigns.added,
+    --             modified = gitsigns.changed,
+    --             removed = gitsigns.removed,
+    --           }
+    --         end
+    --       end,
+    --     },
+    --     "diagnostics",
+    --     symbols = {
+    --       error = icons.diagnostics.Error,
+    --       warn = icons.diagnostics.Warn,
+    --       info = icons.diagnostics.Info,
+    --       hint = icons.diagnostics.Hint,
+    --     },
+    --   },
+    -- },
   },
 
   {

@@ -4,6 +4,10 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- GitWork Trees
+keymap.set("n", "<leader>tl", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
+keymap.set("n", "<leader>ta", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
+
 -- Removing some default keymaps
 keymap.del("n", "[q", opts)
 -- keymap.del("n", "<leader>ca", opts)
@@ -16,8 +20,8 @@ end, opts)
 keymap.set("n", "<leader>r", function()
   vim.lsp.buf.rename()
 end, opts)
-keymap.set("n", "[w", "<Cmd>BufferLineCycleNext<CR>")
-keymap.set("n", "[q", "<Cmd>BufferLineCycleNext<CR>")
+-- keymap.set("n", "[w", "<Cmd>BufferLineCycleNext<CR>")
+-- keymap.set("n", "[q", "<Cmd>BufferLineCycleNext<CR>")
 --Quit buffer
 keymap.set("n", "<C-q>", ":bdelete<CR>")
 -- move highlighted line up or down
