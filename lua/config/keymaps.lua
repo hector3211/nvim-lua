@@ -8,10 +8,13 @@ local opts = { noremap = true, silent = true }
 local harpoon_ui = require("harpoon.ui")
 local harpoon_mark = require("harpoon.mark")
 
--- Map Oil to <leader>e
-keymap.set("n", "<leader>e", function()
-  require("oil").toggle_float()
-end, opts)
+keymap.set("n", "\\", function()
+	require("oil").toggle_float()
+end, { desc = "Toggle Oil " })
+
+keymap.set("n", "<leader>\\", function()
+	Snacks.terminal.toggle()
+end, { desc = "Toggle terminal" })
 
 -- Highlight on search, but clear on pressing <Esc> in normal mode
 keymap.set("n", "<Esc>", ":nohlsearch<CR>", opts)
@@ -27,11 +30,11 @@ keymap.del("n", "[q", opts)
 -- keymap.del("n", "<leader>cr", opts)
 
 keymap.set("n", "<leader>a", function()
-  vim.lsp.buf.code_action()
-end, opts)
+	vim.lsp.buf.code_action()
+end, { desc = "Lsp Code Action" })
 keymap.set("n", "<leader>r", function()
-  vim.lsp.buf.rename()
-end, opts)
+	vim.lsp.buf.rename()
+end, { desc = "Lsp Rename Target" })
 
 -- Cycle buffers
 keymap.set("n", "<Tab>", ":bnext<CR>", opts)
@@ -49,53 +52,53 @@ keymap.set("n", "<leader>Y", "+Y")
 
 -- Diagnostics
 keymap.set("n", "<leader>n", function()
-  vim.diagnostic.goto_next()
-end, opts)
+	vim.diagnostic.goto_next()
+end, { desc = "Lsp go to next indicator" })
 keymap.set("n", "<leader>p", function()
-  vim.diagnostic.goto_prev()
-end, opts)
+	vim.diagnostic.goto_prev()
+end, { desc = "Lsp go to previous indicator" })
 
 -- Harpoon keybinds --
 -- Open harpoon ui
 keymap.set("n", "<leader>ho", function()
-  harpoon_ui.toggle_quick_menu()
-end)
+	harpoon_ui.toggle_quick_menu()
+end, { desc = "harpoon toggle menu" })
 
 -- Add current file to harpoon
 keymap.set("n", "<leader>ha", function()
-  harpoon_mark.add_file()
-end)
+	harpoon_mark.add_file()
+end, { desc = "harpoon add file" })
 
 -- Remove current file from harpoon
 keymap.set("n", "<leader>hr", function()
-  harpoon_mark.rm_file()
-end)
+	harpoon_mark.rm_file()
+end, { desc = "harpoon remove file" })
 
 -- Remove all files from harpoon
 keymap.set("n", "<leader>hc", function()
-  harpoon_mark.clear_all()
-end)
+	harpoon_mark.clear_all()
+end, { desc = "harpoon delete list" })
 
 -- Quickly jump to harpooned files
 keymap.set("n", "<leader>1", function()
-  harpoon_ui.nav_file(1)
-end)
+	harpoon_ui.nav_file(1)
+end, { desc = "harpoon go to 1" })
 
 keymap.set("n", "<leader>2", function()
-  harpoon_ui.nav_file(2)
-end)
+	harpoon_ui.nav_file(2)
+end, { desc = "harpoon go to 2" })
 
 keymap.set("n", "<leader>3", function()
-  harpoon_ui.nav_file(3)
-end)
+	harpoon_ui.nav_file(3)
+end, { desc = "harpoon go to 3" })
 
 keymap.set("n", "<leader>4", function()
-  harpoon_ui.nav_file(4)
-end)
+	harpoon_ui.nav_file(4)
+end, { desc = "harpoon go to 4" })
 
 keymap.set("n", "<leader>5", function()
-  harpoon_ui.nav_file(5)
-end)
+	harpoon_ui.nav_file(5)
+end, { desc = "harpoon go to 5" })
 
 -- TSC autocommand keybind to run TypeScripts tsc
 keymap.set("n", "<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
