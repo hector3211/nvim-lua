@@ -8,7 +8,7 @@ local opts = { noremap = true, silent = true }
 local harpoon_ui = require("harpoon.ui")
 local harpoon_mark = require("harpoon.mark")
 
-keymap.set("n", "\\", function()
+keymap.set("n", "<leader>e", function()
 	require("oil").toggle_float()
 end, { desc = "Toggle Oil " })
 
@@ -52,10 +52,10 @@ keymap.set("n", "<leader>Y", "+Y")
 
 -- Diagnostics
 keymap.set("n", "<leader>n", function()
-	vim.diagnostic.goto_next()
+	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Lsp go to next indicator" })
 keymap.set("n", "<leader>p", function()
-	vim.diagnostic.goto_prev()
+	vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Lsp go to previous indicator" })
 
 -- Harpoon keybinds --
